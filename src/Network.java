@@ -1,5 +1,10 @@
 import java.util.Random;
 
+/*
+ * @Authors: Shawn Craine, Adam Childs (Trevor Cickovski)
+ * 
+ */
+
 class TableEntry {
    public int distance;   // The total distance
    public int sourceHost; // The originator
@@ -97,20 +102,22 @@ public class Network {
         // 3. For each umarked neighbor of k (call it j), check if the distance from i through k to j
         //    is less than the current shortest path from i to j -> if it is update the table
     	 TableEntry j = tables[realK][0];
-    	 int throughK = 2147000000;
+    	 int shortest = tables[i][0].distance; // Set initial shortest
     	 for (int m = 0; m < tables.length; m++)
-    		 if (!tables[realK][m].mark) {
-    			 int kTj = edges[realK][m];
+    	 {
+    		 if (!tables[realK][m].mark)
+    		 {
     			 int iTk = edges[i][realK];
+    			 int kTj = edges[realK][m];
     			 int iTkTj = kTj + iTk;
     			 
-    			 if (iTkTj < throughK) {
-    				 tables[][m] = j;
-    				 throughK = iTkTj;
+    			 if (iTkTj < shortest)
+    			 {
+    				 shortest = iTkTj;
+    				 tables[i][m].distance = shortest;
     			 }
-    			 
-    			
     		 }
+    	 }
     			 
         // 4. Check if there are anymore unmarked hosts
         //    If not, set allmarked to true (which stops the loop)
